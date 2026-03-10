@@ -1,267 +1,292 @@
-// import "./App.css";
-// import { useState } from "react";
+import { useState } from 'react';
 
-
-// // export default function MovingDot() {
-// //   const [position, setPosition] = useState({
-// //     x: 0,
-// //     y: 0
-// //   });
-// //   return (
-// //     <div
-// //       onPointerMove={e => {
-// //         setPosition({
-// //           x: e.clientX,
-// //           y: e.clientY
-// //         });
-     
-// //       }}
-// //       style={{
-// //         position: 'relative',
-// //         width: '100vw',
-// //         height: '100vh',
-// //       }}>
-// //       <div style={{
-// //         position: 'absolute',
-// //         backgroundColor: 'red',
-// //         borderRadius: '50%',
-// //         transform: `translate(${position.x}px, ${position.y}px)`,
-// //         left: -10,
-// //         top: -10,
-// //         width: 20,
-// //         height: 20,
-// //       }} />
-// //     </div>
-// //   );
-// // }
-
-// //copying objects with spread syntax
-
-// export default function Form() {
-//   const [person, setPerson] = useState({
-//     firstName: 'Barbara',
-//     lastName: 'Hepworth',
-//     email: 'bhepworth@sculpture.com'
-//   });
-
-//   function handleChange(event) {
-//     setPerson({
-//       ...person,
-//       [event.target.name]: event.target.value
-//     });
-//   }
-//   return (
-//     <>
-//       <label>
-//         First name:
-//         <input
-//           name="firstName"
-//           value={person.firstName}
-//           onChange={handleChange}
-//         />
-//       </label>
-//       <label>
-//         Last name:
-//         <input
-//           name="lastName"   
-//           value={person.lastName}
-//           onChange={handleChange}
-//         />
-//       </label>
-//       <label>
-//         Email:
-//         <input
-//             name="email"
-//           value={person.email}
-//           onChange={handleChange}
-//         />
-//       </label>
-//       <p>
-//         {person.firstName}{' '}
-//         {person.lastName}{' '}
-//         ({person.email})
-//       </p>
-//     </>
-//   );
-
-// }
-
-//updatting nested object
-
-// import { useState } from 'react';
-
-// export default function Form() {
-//   const [person, setPerson] = useState({
-//     name: 'Niki de Saint Phalle',
-//     artwork: {
-//       title: 'Blue Nana',
-//       city: 'Hamburg',
-//       image: 'https://i.imgur.com/Sd1AgUOm.jpg',
-//     }
-//   });
-
-//   function handleNameChange(e) {
-//     setPerson({
-//       ...person,
-//       name: e.target.value
-//     });
-//   }
-
-//   function handleTitleChange(e) {
-// setPerson({
-//     ...person,
-//     artwork:{
-//         ...person.artwork,
-//         title: e.target.value 
-//     }
-//   }
-// )};
-
-
-//   function handleCityChange(e) {
-//     setPerson({
-//       ...person,
-//       artwork: {
-//         ...person.artwork,
-//         city: e.target.value
-//       }
-//     });
-//   }
-
-//   function handleImageChange(e) {
-//     setPerson({
-//       ...person,
-//       artwork: {
-//         ...person.artwork,
-//         image: e.target.value
-//       }
-//     });
-//   }
+// let nextId = 0;
+//bad practce to mutate state directly, it will not trigger a re-render
+// export default function List() {
+//   const [name, setName] = useState('');
+//   const [artists, setArtists] = useState([]);
 
 //   return (
 //     <>
-//       <label>
-//         Name:
-//         <input
-//           value={person.name}
-//           onChange={handleNameChange}
-//         />
-//       </label>
-//       <label>
-//         Title:
-//         <input
-//           value={person.artwork.title}
-//           onChange={handleTitleChange}
-//         />
-//       </label>
-//       <label>
-//         City:
-//         <input
-//           value={person.artwork.city}
-//           onChange={handleCityChange}
-//         />
-//       </label>
-//       <label>
-//         Image:
-//         <input
-//           value={person.artwork.image}
-//           onChange={handleImageChange}
-//         />
-//       </label>
-//       <p>
-//         <i>{person.artwork.title}</i>
-//         {' by '}
-//         {person.name}
-//         <br />
-//         (located in {person.artwork.city})
-//       </p>
-//       <img 
-//         src={person.artwork.image} 
-//         alt={person.artwork.title}
+//       <h1>Inspiring sculptors:</h1>
+//       <input
+//         value={name}
+//         onChange={e => setName(e.target.value)}
 //       />
+//       <button onClick={() => {
+//         artists.push({
+//           id: nextId++,
+//           name: name,
+//         });
+//       }}>Add</button>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}>{artist.name}</li>
+//         ))}
+//       </ul>
 //     </>
 //   );
 // }
 
-//immer lib for reat 
-import { useImmer } from 'use-immer';
 
-export default function Form() {
-  const [person, updatePerson] = useImmer({
-    name: 'Niki de Saint Phalle',
-    artwork: {
-      title: 'Blue Nana',
-      city: 'Hamburg',
-      image: 'https://i.imgur.com/Sd1AgUOm.jpg',
-    }
-  });
 
-  function handleNameChange(e) {
-  updatePerson(draft=> {
-    draft.name = e.target.value;
-  })
-  }
+//instead of mutating the state directly, we should create a new array with the new artist and set it as the new state
+//adding in list and rendering the list with the new item at the top of the list
 
-  function handleTitleChange(e) {
-    updatePerson(draft => {
-      draft.artwork.title = e.target.value;
-    });
-  }
+// let nextId = 0;
 
-  function handleCityChange(e) {
-    updatePerson(draft => {
-      draft.artwork.city = e.target.value;
-    });
-  }
 
-  function handleImageChange(e) {
-    updatePerson(draft => {
-      draft.artwork.image = e.target.value;
-    });
-  }
+// export default function List() {
+//   const [name, setName] = useState('');
+//   const [artists, setArtists] = useState([]);
+//   const addArtist = () => {
+//  setArtists([
+//   { id: nextId++, name: name },
+//   ...artists // Put old items at the end
+// ]);
+//     setName('');
+//   };
 
-  return (
-    <>
-      <label>
-        Name:
-        <input
-          value={person.name}
-          onChange={handleNameChange}
-        />
-      </label>
-      <label>
-        Title:
-        <input
-          value={person.artwork.title}
-          onChange={handleTitleChange}
-        />
-      </label>
-      <label>
-        City:
-        <input
-          value={person.artwork.city}
-          onChange={handleCityChange}
-        />
-      </label>
-      <label>
-        Image:
-        <input
-          value={person.artwork.image}
-          onChange={handleImageChange}
-        />
-      </label>
-      <p>
-        <i>{person.artwork.title}</i>
-        {' by '}
-        {person.name}
-        <br />
-        (located in {person.artwork.city})
-      </p>
-      <img 
-        src={person.artwork.image} 
-        alt={person.artwork.title}
-      />
-    </>
-  );
-}
+//   const handleKeyDown = (e) => {
+//     if (e.key === 'Enter') {
+//       addArtist();
+//     }
+//   };
+
+//   return (
+//     <>
+//       <h1>Inspiring sculptors:</h1>
+//       <input
+//         value={name}
+//         onChange={e => setName(e.target.value)}
+//         onKeyDown={handleKeyDown}
+//       />
+//       <button onClick={addArtist}>Add</button>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}>{artist.name}</li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
+
+//removing from an array using filter method
+
+
+// let initialArtists = [
+//   { id: 0, name: 'Marta Colvin Andrade' },
+//   { id: 1, name: 'Lamidi Olonade Fakeye'},
+//   { id: 2, name: 'Louise Nevelson'},
+// ];
+
+// export default function List() {
+//   const [artists, setArtists] = useState(
+//     initialArtists
+//   );
+
+//   return (
+//     <>
+//       <h1>Inspiring sculptors:</h1>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}>
+//             {artist.name}{' '}
+//             <button onClick={() => {
+
+//               setArtists(
+//                 artists.filter(a =>
+//                   a.id !== artist.id,
+
+//                 )
+//               );
+
+//             }}>
+//               Delete
+//             </button>
+//           </li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
+
+
+//updating an item in an array using map method
+
+
+
+// let initialShapes = [
+//   { id: 0, type: 'circle', x: 50, y: 100 },
+//   { id: 1, type: 'square', x: 150, y: 100 },
+//   { id: 2, type: 'circle', x: 250, y: 100 },
+// ];
+
+// export default function ShapeEditor() {
+//   const [shapes, setShapes] = useState(
+//     initialShapes
+//   );
+
+//   function handleClick() {
+//     const nextShapes = shapes.map(shape => {
+//       if (shape.type === 'square') {
+//         // No change
+//         return shape;
+//       } else {
+//         // Return a new circle 50px below
+//         return {
+//           ...shape,
+//           y: shape.y + 50,
+//         };
+//       }
+//     });
+//     // Re-render with the new array
+//     setShapes(nextShapes);
+//   }
+
+//   return (
+//     <>
+//       <button onClick={handleClick}>
+//         Move circles down!
+//       </button>
+//       {shapes.map(shape => (
+//         <div
+//           key={shape.id}
+//           style={{
+//           background: 'purple',
+//           position: 'absolute',
+//           left: shape.x,
+//           top: shape.y,
+//           borderRadius:
+//             shape.type === 'circle'
+//               ? '50%' : '',
+//           width: 20,
+//           height: 20,
+//         }} />
+//       ))}
+//     </>
+//   );
+// }
+
+
+//replacing an item in an array using map method
+
+
+// let initialCounters = [
+//   0, 0, 0
+// ];
+
+// export default function CounterList() {
+//   const [counters, setCounters] = useState(
+//     initialCounters
+//   );
+
+//   function handleIncrementClick(index) {
+//     const nextCounters = counters.map((c, i) => {
+//       if (i === index) {
+//         // Increment the clicked counter
+//         return c + 1;
+//       } else {
+//         // The rest haven't changed
+//         return c;
+//       }
+//     });
+//     setCounters(nextCounters);
+//   }
+
+//   return (
+//     <ul>
+//       {counters.map((counter, i) => (
+//         <li key={i}>
+//           {counter}
+//           <button onClick={() => {
+//             handleIncrementClick(i);
+//           }}>+1</button>
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// }
+
+//inserting an item in an array using slice method
+
+
+// let nextId = 3;
+// const initialArtists = [
+//   { id: 0, name: 'Marta Colvin Andrade' },
+//   { id: 1, name: 'Lamidi Olonade Fakeye'},
+//   { id: 2, name: 'Louise Nevelson'},
+// ];
+
+// export default function List() {
+//   const [name, setName] = useState('');
+//   const [artists, setArtists] = useState(
+//     initialArtists
+//   );
+
+//   function handleClick() {
+//     const insertAt = 1; // Could be any index
+//     const nextArtists = [
+//       // Items before the insertion point:
+//       ...artists.slice(0, insertAt),
+//       // New item:
+//       { id: nextId++, name: name },
+//       // Items after the insertion point:
+//       ...artists.slice(insertAt)
+//     ];
+//     setArtists(nextArtists);
+//     setName('');
+//   }
+
+//   return (
+//     <>
+//       <h1>Inspiring sculptors:</h1>
+//       <input
+//         value={name}
+//         onChange={e => setName(e.target.value)}
+//       />
+//       <button onClick={handleClick}>
+//         Insert
+//       </button>
+//       <ul>
+//         {artists.map(artist => (
+//           <li key={artist.id}>{artist.name}</li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
+
+
+//reversing an array without mutating the original array using slice and reverse method
+
+
+// const initialList = [
+//   { id: 0, title: 'Big Bellies' },
+//   { id: 1, title: 'Lunar Landscape' },
+//   { id: 2, title: 'Terracotta Army' },
+// ];
+
+// export default function List() {
+//   const [list, setList] = useState(initialList);
+
+//   function handleClick() {
+//     const nextList = [...list];
+//     nextList.reverse();
+//     setList(nextList);
+//   }
+
+//   return (
+//     <>
+//       <button onClick={handleClick}>
+//         Reverse
+//       </button>
+//       <ul>
+//         {list.map(artwork => (
+//           <li key={artwork.id}>{artwork.title}</li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
 
