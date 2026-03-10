@@ -1,0 +1,13 @@
+.image{
+
+    border-radius: 50%  ;
+    width: 200px;
+  
+}
+.image_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 30px;
+}

@@ -1,0 +1,31 @@
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  font-size: 2.5em;
+  font-weight: bold;
+  border: 3px solid #ccc;
+  border-radius: 5px;
+  background-color: aquamarine;
+  color: black
+}
+.list-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  
+}
+.list-items li:hover{
+    color: blueviolet;
+    cursor: pointer;
+}
+.category:hover{
+    color: blue;
+    cursor: pointer;
+    background-color: azure;
+    transition-duration: 500ms;
+}

@@ -1,0 +1,33 @@
+/* .avatar{
+    width: 150px;
+    border-radius: 50%;
+}
+.photo{
+    width: 150px;
+    border-radius: 50%;
+}
+.content{
+    list-style-type: none;
+    font-size: 20px;
+    color: #469123;
+} */
+
+.welocome-meesage{
+
+    background-color: #469123;
+    font-size: 30px;
+    color: white;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    
+}
+.login-message{
+    background-color: #920d0d;
+    font-size: 30px;
+    color: white;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    
+}

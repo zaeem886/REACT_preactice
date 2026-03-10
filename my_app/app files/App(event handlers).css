@@ -1,0 +1,17 @@
+.div_main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.button_main {
+
+    width: 150px;
+    height: 50px;
+  background-color: #1a1a1a;
+  color: white;
+}
+.button_main:hover {
+  background-color: #646cff;
+}
